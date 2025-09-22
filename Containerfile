@@ -1,3 +1,5 @@
+ARG FEDORA_MAJOR_VERSION
+
 # switch to official image once they are signed: quay.io/fedora/fedora-silverblue
 # see https://discussion.fedoraproject.org/t/quay-io-fedora-fedora-silverblue-39-not-updated/112593/5 
 # and https://pagure.io/workstation-ostree-config / https://pagure.io/releng/issue/10399
