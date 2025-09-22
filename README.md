@@ -18,7 +18,7 @@ rpm-ostree rebase ostree-unverified-registry:ghcr.io/tbshfr/skyblue
 
 - Rebase to a signed image to finish the installation
 ```
-rpm-ostree rebase ostree-image-signed:docker:ghcr.io/tbshfr/skyblue
+rpm-ostree rebase ostree-image-signed:docker://ghcr.io/tbshfr/skyblue
 ```
 `systemctl reboot`
 
