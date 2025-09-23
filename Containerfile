@@ -5,9 +5,18 @@ FROM ${BASE_IMAGE}@${BASE_IMAGE_DIGEST}
 
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
-COPY --chmod=755 build/scripts/build.sh /tmp/build.sh
+COPY --chmod=755 build/scripts/ /tmp/scripts/
 
-RUN bash /tmp/build.sh
+RUN set -euo pipefail && \
+    if ls /tmp/scripts/*.sh 1> /dev/null 2>&1; then \
+        for script in /tmp/scripts/*.sh; do \
+            echo "Executing: $script" && \
+            bash "$script" || { echo "Script $script failed with exit code $?"; exit 1; }; \
+        done; \
+    else \
+        echo "No scripts found in /tmp/scripts/"; \
+        exit 1
+    fi
 
 RUN rm -rf /tmp/* \
     && dnf clean all \
