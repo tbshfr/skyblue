@@ -15,7 +15,7 @@ RUN set -euo pipefail && \
         done; \
     else \
         echo "No scripts found in /tmp/scripts/"; \
-        exit 1
+        exit 1 \
     fi
 
 RUN rm -rf /tmp/* \
