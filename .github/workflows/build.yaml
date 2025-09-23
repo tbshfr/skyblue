@@ -32,6 +32,10 @@ jobs:
       max-parallel: 1
       fail-fast: true
       matrix:
+        # switch to official image once they are signed: quay.io/fedora/fedora-silverblue
+        # see https://discussion.fedoraproject.org/t/quay-io-fedora-fedora-silverblue-39-not-updated/112593/5 
+        # and https://pagure.io/workstation-ostree-config / https://pagure.io/releng/issue/10399
+        base_image: ["quay.io/fedora-ostree-desktops/silverblue"]
         major_version: ["42"]
         platform:
           - linux/amd64
@@ -39,6 +43,28 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@d7543c93d881b35a8faa02e8e3605f69b7a1ce62 # v3.10.0
+
+      - name: Verify base image signature
+        id: verify-base
+        run: |
+          if COSIGN_OUTPUT=$(cosign verify --output=json --key build/keys/quay.io-fedora-ostree-desktops.pub ${{ matrix.base_image }}:${{ matrix.major_version }} 2>/dev/null); then
+            BASE_DIGEST=$(echo "$COSIGN_OUTPUT" | jq -r '.[0].critical.image."docker-manifest-digest"')
+
+            if [[ "$BASE_DIGEST" == "null" || -z "$BASE_DIGEST" ]]; then
+              echo "❌ Failed to extract digest from cosign output"
+              exit 1
+            fi
+
+            echo "base_digest=${BASE_DIGEST}" >> $GITHUB_OUTPUT
+            echo "✅ Base image signature verified successfully"
+            echo "Verified base image digest: ${BASE_DIGEST}"
+          else
+            echo "❌ Base image signature verification failed!"
+            exit 1
+          fi
 
       - name: Set up Docker Buildx
         id: buildx
@@ -71,7 +97,8 @@ jobs:
           file: |
             ./Containerfile
           build-args: |
-            FEDORA_MAJOR_VERSION=${{ matrix.major_version }}
+            BASE_IMAGE=${{ matrix.base_image }}
+            BASE_IMAGE_DIGEST=${{ steps.verify-base.outputs.base_digest }}
           platforms: ${{ matrix.platform }}
           provenance: false
           push: true
@@ -79,9 +106,6 @@ jobs:
           tags:  ${{ steps.meta.outputs.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-      - name: Install Cosign
-        uses: sigstore/cosign-installer@d7543c93d881b35a8faa02e8e3605f69b7a1ce62 # v3.10.0
 
       - name: Sign container image
         run: |

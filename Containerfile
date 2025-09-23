@@ -1,9 +1,7 @@
-ARG FEDORA_MAJOR_VERSION
+ARG BASE_IMAGE
+ARG BASE_IMAGE_DIGEST
 
-# switch to official image once they are signed: quay.io/fedora/fedora-silverblue
-# see https://discussion.fedoraproject.org/t/quay-io-fedora-fedora-silverblue-39-not-updated/112593/5 
-# and https://pagure.io/workstation-ostree-config / https://pagure.io/releng/issue/10399
-FROM quay.io/fedora-ostree-desktops/silverblue:${FEDORA_MAJOR_VERSION}
+FROM ${BASE_IMAGE}@${BASE_IMAGE_DIGEST}
 
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
