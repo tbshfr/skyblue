@@ -9,6 +9,7 @@ on:
     paths:
       - Containerfile*
       - rootfs/**
+      - build/**
   workflow_dispatch:
 
 env:
