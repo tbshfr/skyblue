@@ -7,7 +7,7 @@ COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
 COPY --chmod=755 build/scripts/ /tmp/scripts/
 
-RUN <<-EOT sh
+RUN <<-EOT
     set -euo pipefail
     if ls /tmp/scripts/*.sh 1> /dev/null 2>&1; then
         for script in /tmp/scripts/*.sh; do
