@@ -1,0 +1,11 @@
+[Unit]
+Description=Apply versioned kernel args
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/apply-kargs.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
