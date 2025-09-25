@@ -10,7 +10,7 @@ printf '%s\n' \
   "sysloglvl=0" \
   "kmsgloglvl=0" \
   "fileloglvl=0" \
-  > "$temp_file"
+  > "$conf_file"
 
 /usr/bin/dracut \
     --kver "${KERNEL}" \
@@ -20,6 +20,6 @@ printf '%s\n' \
     --reproducible \
     "/lib/modules/${KERNEL}/initramfs.img"
 
-rm -- "${temp_file}"
+rm -- "${conf_file}"
 
 chmod 0600 "/lib/modules/${KERNEL}/initramfs.img"
