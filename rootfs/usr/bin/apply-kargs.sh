@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux -o pipefail
+set -euo pipefail
 
 VERSION=1
 MARKER="/var/lib/script-markers/kargs"
@@ -42,6 +42,7 @@ if [ "$PREV_VERSION" -ge "$VERSION" ]; then
     exit 0
 fi
 
+DELETE_KARGS=()
 for old_k in "${APPLIED_KARGS[@]}"; do
     skip=false
     for new_k in "${KARGS[@]}"; do
@@ -51,23 +52,47 @@ for old_k in "${APPLIED_KARGS[@]}"; do
         fi
     done
     if ! $skip; then
-        rpm-ostree kargs --delete="$old_k"
+        DELETE_KARGS+=("--delete=$old_k")
     fi
 done
 
+ADD_KARGS=()
 for new_k in "${KARGS[@]}"; do
-    rpm-ostree kargs --append-if-missing="$new_k"
+    already_applied=false
+    for applied_k in "${APPLIED_KARGS[@]}"; do
+        if [[ "$new_k" == "$applied_k" ]]; then
+            already_applied=true
+            break
+        fi
+    done
+    if ! $already_applied; then
+        ADD_KARGS+=("--append-if-missing=$new_k")
+    fi
 done
 
-mkdir -p "$(dirname "$MARKER")"
-{
-    printf 'PREV_VERSION=%q\n' "$VERSION"
-    printf 'APPLIED_KARGS=('
-    for k in "${KARGS[@]}"; do
-        printf ' %q' "$k"
-    done
-    printf ' )\n'
-} > "$MARKER"
+if [[ ${#DELETE_KARGS[@]} -gt 0 ]] || [[ ${#ADD_KARGS[@]} -gt 0 ]]; then
+    ALL_ARGS=()
+    if [[ ${#DELETE_KARGS[@]} -gt 0 ]]; then
+        ALL_ARGS+=("${DELETE_KARGS[@]}")
+    fi
+    if [[ ${#ADD_KARGS[@]} -gt 0 ]]; then
+        ALL_ARGS+=("${ADD_KARGS[@]}")
+    fi
+
+    rpm-ostree kargs "${ALL_ARGS[@]}"
+
+    mkdir -p "$(dirname "$MARKER")"
+    {
+        printf 'PREV_VERSION=%q\n' "$VERSION"
+        printf 'APPLIED_KARGS=('
+        for k in "${KARGS[@]}"; do
+            printf ' %q' "$k"
+        done
+        printf ' )\n'
+    } > "$MARKER"
+else
+    echo "No kernel args changes needed - already up to date"
+fi
 
 echo "Kernel args updated to version $VERSION."
 echo "Please reboot to apply"
