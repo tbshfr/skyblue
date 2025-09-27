@@ -1,0 +1,4 @@
+# https://help.gnome.org/admin/system-admin-guide/stable/desktop-background.html.en
+
+[org/gnome/desktop/background]
+picture-uri='file:///usr/share/backgrounds/skyblue/background.png'
