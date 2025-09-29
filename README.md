@@ -1,5 +1,7 @@
 # skyblue
 
+[![Build skyblue](https://github.com/tbshfr/skyblue/actions/workflows/build.yaml/badge.svg)](https://github.com/tbshfr/skyblue/actions/workflows/build.yaml)
+
 Custom Fedora Silverblue image that is propably not ready for production.
 
 ## Install
