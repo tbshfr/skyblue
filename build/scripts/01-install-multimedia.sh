@@ -1,31 +1,15 @@
 #!/usr/bin/env bash
 set -eux -o pipefail
 
-PACKAGES_TO_INSTALL=(
-    "chromium"
-    "code"
-)
-
-if ! dnf5 install -y "${PACKAGES_TO_INSTALL[@]}"; then
-    echo "Package installation failed"
-    exit 1
-fi
-
-# Multimedia
 rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-2020
-# rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-2020
 
 cd /tmp
 FEDORA_VERSION=$(rpm -E %fedora)
 
 wget https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm
-# wget https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm
 
 rpm -K "rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm"
-# rpm -K "rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm"
-
 rpm -i "rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm"
-# rpm -i "rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm"
 
 cd -
 
