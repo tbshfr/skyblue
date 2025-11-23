@@ -11,6 +11,9 @@ COPY --chmod=755 build/scripts/ /tmp/scripts/
 RUN dnf5 install -y code
 RUN dnf5 install -y chromium
 
+# https://fedoraproject.org/wiki/Changes/Modular_GnuPG_Packaging
+RUN dnf5 install -y gnupg2-scdaemon
+
 RUN /tmp/scripts/01-install-multimedia.sh
 
 RUN /tmp/scripts/02-install-flatpack.sh && \
