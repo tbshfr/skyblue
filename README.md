@@ -2,7 +2,7 @@
 
 [![Build skyblue](https://github.com/tbshfr/skyblue/actions/workflows/build.yaml/badge.svg)](https://github.com/tbshfr/skyblue/actions/workflows/build.yaml)
 
-Custom Fedora Silverblue image that is propably not ready for production.
+This is a custom Fedora Silverblue image. If you want to use it, you probably want to fork it and build your own.
 
 ## Install
 - Install [Fedora Silverblue](https://fedoraproject.org/atomic-desktops/silverblue/)
@@ -23,6 +23,28 @@ rpm-ostree rebase ostree-unverified-registry:ghcr.io/tbshfr/skyblue
 rpm-ostree rebase ostree-image-signed:docker://ghcr.io/tbshfr/skyblue
 ```
 `systemctl reboot`
+
+## Troubleshooting
+
+### Does Not Automatically Update
+If you are running rpm-ostree version 2026.1:
+```
+$ rpm-ostree --version
+rpm-ostree:
+ Version: '2026.1'
+ Git: 4cacb30261fdf34d543989aad920ce685a271d92
+```
+After the second update attempt, it exits without an error code and without actually updating.
+
+You can fix this by downgrading to an older version and then updating to a newer one:
+```
+# add a temporary overlay (not persistent between reboots)
+sudo rpm-ostree usroverlay
+# install an older rpm-ostree version inside the temporary overlay
+sudo dnf5 install -y --from-repo=updates-archive rpm-ostree-2025.12-1.fc43
+rpm-ostree upgrade
+sudo systemctl reboot
+``` 
 
 ## Credits
 This project was heavily inspired by:
