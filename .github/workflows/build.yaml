@@ -113,6 +113,7 @@ jobs:
           cosign sign -y \
           --key env://COSIGN_PRIVATE_KEY \
           --new-bundle-format=false \
+          --use-signing-config=false \
           ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
         env:
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_KEY }}
