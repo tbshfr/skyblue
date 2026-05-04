@@ -6,7 +6,8 @@ rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-2020
 cd /tmp
 FEDORA_VERSION=$(rpm -E %fedora)
 
-wget https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm
+# use primary download mirror, others are out of date, see https://bugzilla.rpmfusion.org/show_bug.cgi?id=7447
+wget https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm
 
 rpm -K "rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm"
 rpm -i "rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm"
