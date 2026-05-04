@@ -15,9 +15,15 @@ cd -
 
 dnf5 config-manager setopt fedora-cisco-openh264.enabled=1
 
+# https://rpmfusion.org/Howto/Multimedia
+
+# Switch to full ffmpeg
 dnf5 swap ffmpeg-free ffmpeg --allowerasing -y
-dnf5 group install multimedia -y \
+
+# Install additional codec
+dnf5 update @multimedia -y \
     --setopt="install_weak_deps=False" \
     --exclude=PackageKit-gstreamer-plugin
-dnf5 swap mesa-va-drivers mesa-va-drivers-freeworld -y
-dnf5 swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld -y 
+
+# Hardware Accelerated Codec AMD (mesa)
+dnf5 install mesa-va-drivers-freeworld -y
