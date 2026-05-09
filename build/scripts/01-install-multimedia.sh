@@ -26,9 +26,10 @@ dnf5 install \
   gstreamer1-plugin-libav \
   gstreamer1-plugins-bad-freeworld \
   gstreamer1-plugins-ugly \
+  libheif-freeworld \
   gstreamer1-vaapi \
   --setopt="install_weak_deps=False" \
   -y
 
 # Hardware Accelerated Codec AMD (mesa)
-dnf5 install mesa-va-drivers-freeworld -y
+dnf5 swap mesa-va-drivers mesa-va-drivers-freeworld -y
