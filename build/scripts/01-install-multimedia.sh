@@ -22,9 +22,13 @@ dnf5 config-manager setopt fedora-cisco-openh264.enabled=1
 dnf5 swap ffmpeg-free ffmpeg --allowerasing -y
 
 # Install additional codec
-dnf5 update @multimedia -y \
-    --setopt="install_weak_deps=False" \
-    --exclude=PackageKit-gstreamer-plugin
+dnf5 install \
+  gstreamer1-plugin-libav \
+  gstreamer1-plugins-bad-freeworld \
+  gstreamer1-plugins-ugly \
+  gstreamer1-vaapi \
+  --setopt="install_weak_deps=False" \
+  -y
 
 # Hardware Accelerated Codec AMD (mesa)
 dnf5 install mesa-va-drivers-freeworld -y
