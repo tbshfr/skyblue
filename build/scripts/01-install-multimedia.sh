@@ -32,4 +32,6 @@ dnf5 install \
   -y
 
 # Hardware Accelerated Codec AMD (mesa)
-dnf5 swap mesa-va-drivers mesa-va-drivers-freeworld -y
+# swap is no longer necessary: https://src.fedoraproject.org/rpms/mesa/pull-request/133
+# https://discussion.fedoraproject.org/t/swapping-mesa-for-freeworld/190405/3
+dnf5 install mesa-va-drivers-freeworld -y
