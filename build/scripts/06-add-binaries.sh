@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eux -o pipefail
 
-manifest="${1:-/tmp/binaries.json}"
+manifest="${1:-/tmp/config/binaries.json}"
 architecture="$(uname -m)"
 workdir=""
 manifest_rows=""

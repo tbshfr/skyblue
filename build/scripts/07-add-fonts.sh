@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eux -o pipefail
 
-manifest="${1:-/tmp/fonts.json}"
+manifest="${1:-/tmp/config/fonts.json}"
 workdir=""
 manifest_rows=""
 

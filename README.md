@@ -26,7 +26,7 @@ rpm-ostree rebase ostree-image-signed:docker://ghcr.io/tbshfr/skyblue
 
 ## Additional Binaries and Fonts
 
-Add one object per binary to `binaries.json`:
+Add one object per binary to `build/config/binaries.json`:
 
 ```json
 {
@@ -42,7 +42,7 @@ Add one object per binary to `binaries.json`:
 The URL and binary path can contain `{version}` and `{arch}` placeholders.</br>
 Leave `binary_path` empty for direct binaries; for tar or zip archives, set it to the executables path inside the archive.
 
-Same principle applies to fonts, just add them to `fonts.json`
+Same principle applies to fonts, just add them to `build/config/fonts.json`
 
 ## Troubleshooting
 

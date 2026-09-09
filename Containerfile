@@ -5,8 +5,7 @@ FROM ${BASE_IMAGE}@${BASE_IMAGE_DIGEST}
 
 COPY rootfs/ /
 COPY cosign.pub /etc/pki/containers/
-COPY binaries.json /tmp/binaries.json
-COPY fonts.json /tmp/fonts.json
+COPY build/config/ /tmp/config/
 COPY --chmod=755 build/scripts/ /tmp/scripts/
 
 RUN /tmp/scripts/01-install-multimedia.sh
