@@ -1,0 +1,11 @@
+{
+  "fonts": [
+    {
+      "name": "FiraCode",
+      "version": "v3.5.1",
+      "sha256": "68e3bd6164864b8b514605bc34e3a87ac401c8c48682fcce6478c70263340207",
+      "url": "https://github.com/ryanoasis/nerd-fonts/releases/download/{version}/FiraCode.tar.xz",
+      "destination": "/usr/share/fonts/firacode-nerd-font"
+    }
+  ]
+}
