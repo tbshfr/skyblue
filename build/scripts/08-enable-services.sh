@@ -4,5 +4,6 @@ set -eux -o pipefail
 systemctl enable dconf-update.service
 systemctl enable apply-kargs.service
 systemctl enable rpm-ostreed-automatic.timer
+systemctl enable virtnetworkd.service
 
 systemctl mask rpm-ostree-countme.timer
