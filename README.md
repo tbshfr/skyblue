@@ -24,47 +24,10 @@ rpm-ostree rebase ostree-image-signed:docker://ghcr.io/tbshfr/skyblue
 ```
 `systemctl reboot`
 
-## Additional Binaries and Fonts
-
-Add one object per binary to `build/config/binaries.json`:
-
-```json
-{
-	"name": "tool",
-	"version": "1.2.3",
-	"sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
-	"url": "https://example.com/tool-{version}-{arch}.tar.gz",
-	"destination": "/usr/bin/tool",
-	"binary_path": "tool-{version}/bin/tool"
-}
-```
-
-The URL and binary path can contain `{version}` and `{arch}` placeholders.</br>
-Leave `binary_path` empty for direct binaries; for tar or zip archives, set it to the executables path inside the archive.
-
-Same principle applies to fonts, just add them to `build/config/fonts.json`
-
-## Troubleshooting
-
-### Does Not Automatically Update
-If you are running rpm-ostree version 2026.1:
-```
-$ rpm-ostree --version
-rpm-ostree:
- Version: '2026.1'
- Git: 4cacb30261fdf34d543989aad920ce685a271d92
-```
-After the second update attempt, it exits without an error code and without actually updating.
-
-You can fix this by downgrading to an older version and then updating to a newer one:
-```
-# add a temporary overlay (not persistent between reboots)
-sudo rpm-ostree usroverlay
-# install an older rpm-ostree version inside the temporary overlay
-sudo dnf5 install -y --from-repo=updates-archive rpm-ostree-2025.12-1.fc43
-rpm-ostree upgrade
-sudo systemctl reboot
-``` 
+## Documentation
+- [Additional Binaries and Fonts](docs/binaries-and-fonts.md)
+- [Troubleshooting](docs/troubleshooting.md)
+- [SSH into GNOME Boxes VMs via vsock](docs/vm-ssh-vsock.md)
 
 ## Credits
 This project was heavily inspired by:
