@@ -92,6 +92,12 @@ Host dev-vm
 
 Then connect with `ssh dev-vm`.
 
+sshd sets up the `RemoteForward` before the login creates `/run/user/<uid>`. Unless the user is already logged in to the guest, the forward fails with `remote port forwarding failed for listen path`. To keep the runtime dir around after boot, enable lingering in the guest:
+
+```bash
+loginctl enable-linger <user>
+```
+
 ### Turn off SSH over vsock for one VM
 
 Remove the `<vsock>` device from the domain XML, or add `systemd.ssh_auto=no` to the guest's kernel command line.
