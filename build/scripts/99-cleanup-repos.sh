@@ -4,6 +4,7 @@ set -eux -o pipefail
 # rpm repos
 repos_to_disable=(
     "/etc/yum.repos.d/vscode.repo"
+    "/etc/yum.repos.d/gh-cli.repo"
     "/etc/yum.repos.d/fedora-cisco-openh264.repo"
     "/etc/yum.repos.d/rpmfusion-free.repo"
     # "/etc/yum.repos.d/rpmfusion-nonfree.repo"
