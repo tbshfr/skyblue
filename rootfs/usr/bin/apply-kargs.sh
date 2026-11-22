@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-VERSION=1
+VERSION=2
 MARKER="/var/lib/script-markers/kargs"
 
 KARGS=(
@@ -13,7 +13,7 @@ KARGS=(
     "pti=on"
     "randomize_kstack_offset=on"
     "vsyscall=none"
-    # "debugfs=off"
+    "debugfs=off"
     # "oops=panic"
     # "module.sig_enforce=1" # https://www.kernel.org/doc/html/latest/admin-guide/module-signing.html
     "lockdown=confidentiality"
@@ -21,9 +21,13 @@ KARGS=(
     "loglevel=0"
     "spectre_v2=on"
     "random.trust_cpu=off"
+    "random.trust_bootloader=off"
     "iommu=force"
     "iommu.passthrough=0"
     "iommu.strict=1"
+    "intel_iommu=on"
+    "amd_iommu=force_isolation"
+    "efi=disable_early_pci_dma"
     # "mitigations=auto,nosmt"
     "spec_store_bypass_disable=on"
     "l1d_flush=on"
