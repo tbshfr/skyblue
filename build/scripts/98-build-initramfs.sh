@@ -1,7 +1,12 @@
 #!/usr/bin/bash
 set -eux -o pipefail
 
-KERNEL="$(rpm -qa | grep -P 'kernel-(\d+\.\d+\.\d+)' | sed 's/kernel-//')"
+mapfile -t kernels < <(find /usr/lib/modules -mindepth 1 -maxdepth 1 -type d -printf '%f\n')
+if (( ${#kernels[@]} != 1 )); then
+  echo "Expected exactly one kernel in /usr/lib/modules, found ${#kernels[@]}: ${kernels[*]}" >&2
+  exit 1
+fi
+KERNEL="${kernels[0]}"
 
 conf_file="$(mktemp /etc/dracut.conf.d/loglevels.XXXXXX.conf)"
 
