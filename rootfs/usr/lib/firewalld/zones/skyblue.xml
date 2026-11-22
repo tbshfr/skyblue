@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<zone>
+  <short>skyblue</short>
+  <description>Unsolicited incoming network packets are rejected, except for DHCPv6 replies. Incoming packets that are related to outgoing network connections are accepted. Outgoing network connections are allowed.</description>
+  <service name="dhcpv6-client"/>
+</zone>
