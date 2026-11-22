@@ -37,7 +37,3 @@ done
 # 01-install-multimedia.sh enables openh264 via an override in /etc/dnf/repos.override.d,
 # which takes precedence over the repo file, so it has to be removed for the sed above to take effect
 dnf5 config-manager unsetopt fedora-cisco-openh264.enabled
-
-# flatpak remotes
-flatpak remote-delete --system --force flathub || true
-flatpak remote-delete --user --force flathub || true

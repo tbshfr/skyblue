@@ -37,7 +37,6 @@ RUN --mount=type=bind,from=ctx,src=/,dst=/ctx \
     --mount=type=tmpfs,dst=/var/log \
     --mount=type=tmpfs,dst=/var/tmp \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/scripts/02-install-flatpack.sh && \
     /ctx/scripts/07-add-fonts.sh && \
     /ctx/scripts/08-enable-services.sh && \
     /ctx/scripts/09-other.sh
